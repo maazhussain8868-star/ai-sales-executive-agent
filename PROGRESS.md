@@ -1,0 +1,82 @@
+# Project Progress
+
+## Phase Tracking
+
+- [x] **Phase 0: Project setup** (COMPLETED)
+  - [x] Repo structure, TypeScript, Tailwind CSS, Next.js App Router
+  - [x] Linting and build verification (`npm run lint`, `npm run build`, `npm test`)
+  - [x] Environment variable handling & `.env.example`
+  - [x] Supabase project connection & migrations folder (`supabase/migrations/00001_initial_schema.sql`)
+  - [x] Admin login (email + password) & logout flow
+  - [x] Pages: `/login` and empty `/dashboard`
+  - [x] `PROGRESS.md` and `BACKLOG.md`
+  - [x] README setup instructions (under 10 lines)
+- [x] **Phase 1: Sales Brain Builder** (COMPLETED)
+  - [x] Guided interview UI (10 sections, one section per screen, autosave)
+  - [x] Model Router compiler generating 12 markdown files in fixed schema
+  - [x] Viewable and editable brain files with version history
+  - [x] Export 1: ZIP of 12 markdown files (`/api/brain/export/zip`)
+  - [x] Export 2: Phone-ready Voice Agent Prompt under configurable length (`/api/brain/export/prompt`)
+  - [x] Export 3: 10 sample objections test deck (`/api/brain/export/objections`)
+  - [x] AI Employee configuration (name Priya, role, personality, consultative style, goal)
+  - [x] Optional source materials (scripts, FAQs, case studies, transcripts) improving 05, 06, 07
+  - [x] 10-stage conversational flow in Voice Agent Prompt
+  - [x] Demo business seed data (Desynthic selling AI automation)
+  - [x] Supabase migration `supabase/migrations/00002_sales_brain.sql`
+  - [x] Automated test suite in `scripts/test-phase1.mjs`
+- [x] **Phase 2: Voice provider connection** (COMPLETED)
+  - [x] Isolated `VoiceProvider` interface (`updateAgentPrompt`, `dispatchCall`, `parseWebhook`)
+  - [x] OmniDimension adapter for agent "Priya" with API & offline fallback
+  - [x] "Update agent" prompt synchronization button & action
+  - [x] "Test call" button gated strictly to allow-listed numbers
+  - [x] Compliance gate (allow-list verification, DND checking, calling hours, mandatory AI disclosure in prompt)
+  - [x] Post-call webhook endpoint (`/api/webhooks/voice/omnidimension`) storing raw payload, transcript, summary, and extracted variables
+  - [x] Dedicated `/calls` inspection page with calls feed, transcript modal, and allow-list manager
+  - [x] Supabase migration `supabase/migrations/00003_voice_calls.sql`
+  - [x] Automated test suite in `scripts/test-phase2.mjs`
+- [x] **Phase 3: Post-call intelligence** (COMPLETED)
+  - [x] Structured extraction engine (intent, objections, buying/conversation signals, qualification against ICP)
+  - [x] Confidence score (0.0 - 1.0) on extractions
+  - [x] Contextual follow-up parser ("call me next Tuesday" -> upcoming Tuesday 10:00 AM IST with preserved conversation context)
+  - [x] Human handoff flag with selective triggers (explicit request, enterprise scale, compliance grievance, unapproved knowledge)
+  - [x] Lead score (0-100) with written explanation and immediate next recommended action
+  - [x] Call quality rubric (opening, discovery, objections, CTA, compliance) scoring 0-100 with coaching notes
+  - [x] One-paragraph synthesized summary per call
+  - [x] Prospect Memory engine (name, company, role, pain, objections, promises, next follow-up) injected into next call's `call_context`
+  - [x] Automatic retry system (up to 3 attempts with exponential backoff) and error logging
+  - [x] Evaluation test harness on 10 realistic transcript fixtures with 100.0% agreement (`npm run eval:intelligence`)
+  - [x] Supabase migration `supabase/migrations/00004_post_call_intelligence.sql`
+  - [x] Integrated into `/calls` dashboard with badges, filters, memory panel, and handoff alerts
+  - [x] Automated test suite in `scripts/test-phase3.mjs`
+- [x] **Phase 4: Leads, campaigns and scheduling** (COMPLETED)
+  - [x] CSV lead import with phone cleanup (+91 format), duplicate removal and DND status
+  - [x] Complete lead lifecycle tracking (NEW, READY, CALLED, CONNECTED, CONVERSATION, QUALIFIED, UNQUALIFIED, FOLLOW-UP, MEETING_BOOKED)
+  - [x] Campaign builder with AI employee assignment, call window, max attempts, retry gap, and daily cap
+  - [x] Scheduler engine with strict compliance: 10:00-18:00 IST calling hours, Sunday complete shutdown, DND filtering, daily caps, and stuck lead recovery
+  - [x] Immediate cycle halting upon campaign pause
+  - [x] Appointment booking system with Google Meet calendar links and n8n WhatsApp confirmation webhook trigger
+  - [x] Interactive `/campaigns` management interface with live pipeline filter, scheduler triggers, and appointment cards
+  - [x] Supabase migration `supabase/migrations/00005_leads_campaigns_scheduling.sql`
+  - [x] Automated test suite in `scripts/test-phase4.mjs`
+- [x] **Phase 5: More channels (WhatsApp and Email) and sequences** (COMPLETED)
+  - [x] Channel interface with three isolated adapters: Voice, WhatsApp (Meta Cloud API), and Email (Transactional)
+  - [x] Explicit channel consent tracking with hard blocks on unconsented messaging
+  - [x] WhatsApp compliance rules: approved templates for business-initiated outreach, 24-hour service window for free-text
+  - [x] Email compliance rules: mandatory unsubscribe link in every outbound email, suppression list check, compliant postal footer
+  - [x] Global Stop engine: STOP on WhatsApp or unsubscribe on email halts all channels, sets DND, and aborts active sequences
+  - [x] Omnichannel 3-step sequence engine (Call -> WhatsApp -> Email) with automatic termination upon reply or booking
+  - [x] Inbound reply ingestion with Sales Brain AI drafter in default human approval mode (`pending_approval`)
+  - [x] Unified lead timeline viewer displaying all calls, WhatsApp messages, and emails chronologically
+  - [x] Supabase migration `supabase/migrations/00006_multichannel_and_sequences.sql`
+  - [x] Automated test suite in `scripts/test-phase5.mjs`
+- [x] **Phase 6: Founder dashboard and multi-client** (COMPLETED)
+  - [x] Executive ROI & Analytics dashboard: calls made, answered, conversations, qualified leads, meetings booked, conversion rate, average call duration, cost per qualified lead, manual revenue attributed, revenue per AI employee
+  - [x] Channel metrics: WhatsApp and email sent, delivered, replied, unsubscribed, and conversion per channel
+  - [x] Secondary metrics: answer rate, objection resolution rate, follow-up completion rate, human handoff rate, AI error rate, average call quality score
+  - [x] Multi-tenant workspaces with Row Level Security (RLS) data isolation, workspace switcher, and roles (`admin`, `client`)
+  - [x] Per-plan minute usage metering and automated calling shutdown when cap is reached
+  - [x] AES-256-GCM encrypted storage for provider API keys with masked UI preview (`omni••••••••3210`)
+  - [x] Audit log system tracking compliance and admin actions per workspace
+  - [x] Automated test suite in `scripts/test-phase6.mjs` verifying multi-tenant isolation (0 data leakage), 1:1 metric aggregation, usage caps, and key encryption
+- [ ] **Phase 7: Later features** (PENDING)
+

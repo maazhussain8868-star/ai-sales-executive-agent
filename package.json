@@ -1,26 +1,34 @@
 {
-  "name": "temp-app",
+  "name": "ai-sales-agent",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "eval:intelligence": "tsx scripts/eval-intelligence.mjs",
+    "test": "node scripts/test-phase0.mjs && tsx scripts/test-phase1.mjs && tsx scripts/test-phase2.mjs && tsx scripts/test-phase3.mjs && tsx scripts/test-phase4.mjs && tsx scripts/test-phase5.mjs && tsx scripts/test-phase6.mjs && tsx scripts/test-phase7.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.3",
+    "jszip": "^3.10.2",
+    "lucide-react": "^1.53.0",
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
+    "@types/jszip": "^3.4.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
