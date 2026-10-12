@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { FounderDashboard } from './FounderDashboard'
+import { FounderDashboardV2 } from './FounderDashboardV2'
 import { SalesBrainContainer } from '@/components/brain/SalesBrainContainer'
 import { Phase7AdvancedSuite } from './Phase7AdvancedSuite'
 import {
@@ -32,7 +33,7 @@ export function DashboardTabs({
   initialInterviewData,
   initialCompiledBrain,
 }: DashboardTabsProps) {
-  const [activeTab, setActiveTab] = useState<'analytics' | 'brain' | 'phase7'>('analytics')
+  const [activeTab, setActiveTab] = useState<'analytics' | 'brain' | 'phase7' | 'v2_intelligence'>('analytics')
 
   return (
     <div className="space-y-6">
@@ -74,6 +75,18 @@ export function DashboardTabs({
             <Sparkles className="h-4 w-4 text-purple-300" />
             Enterprise Suite (Phase 7)
           </button>
+
+          <button
+            onClick={() => setActiveTab('v2_intelligence')}
+            className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition ${
+              activeTab === 'v2_intelligence'
+                ? 'bg-emerald-600 text-white shadow'
+                : 'text-neutral-400 hover:text-white hover:bg-neutral-900'
+            }`}
+          >
+            <Sparkles className="h-4 w-4 text-emerald-300" />
+            PRD v2.1 Pipeline &amp; QA
+          </button>
         </div>
 
         <span className="text-xs text-neutral-500 hidden sm:inline">
@@ -81,6 +94,8 @@ export function DashboardTabs({
             ? 'Multi-Client Performance'
             : activeTab === 'brain'
             ? 'Instruction Compiler'
+            : activeTab === 'v2_intelligence'
+            ? 'PRD v2.1 Intelligence & Sheets CRM'
             : 'Multilingual, A/B & CRM Sync'}
         </span>
       </div>
@@ -225,6 +240,10 @@ export function DashboardTabs({
             ]
           }}
         />
+      )}
+
+      {activeTab === 'v2_intelligence' && (
+        <FounderDashboardV2 />
       )}
     </div>
   )

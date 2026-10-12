@@ -89,3 +89,68 @@
   - [x] Supabase migration `supabase/migrations/00008_advanced_phase7.sql` with full RLS coverage
   - [x] Comprehensive test suite in `scripts/test-phase7.mjs` verifying all advanced features
 
+---
+
+## PRD v2.1 Pilot Build Phase Tracking
+
+- [x] **Phase 0: Foundation and architecture** (COMPLETED)
+  - [x] Project structure, TypeScript, linting, and automated test runners (`npm run test:v2:phase0`)
+  - [x] Supabase SQL migration `supabase/migrations/00001_v2_core_foundation.sql` creating all 18 core tables with `provider_event_id` unique constraints for idempotency
+  - [x] 5 Adapter Interfaces: `VoiceProvider`, `LLMProvider`, `CalendarProvider`, `CRMProvider`, `MessagingProvider`
+  - [x] Mock/Fake implementations of all 5 adapters passing interface test suites
+  - [x] Config-driven Model Router (`src/lib/model-router/router.ts`) mapping task types to models with fake fallback
+  - [x] Health-check route at `/api/health`
+  - [x] `.env.example` and setup documentation in `README.md`
+- [x] **Phase 1: Workspace, Business Discovery and Sales Brain** (COMPLETED)
+  - [x] Mobile-friendly 5-step guided Business Discovery interview wizard capturing identity, offer, ICP, pricing, proof points, objections, prohibited claims, voice, and handoff rules
+  - [x] Sales Brain compiler generating 8 modular sections (`company`, `products`, `icp`, `objections`, `pricing`, `compliance`, `voice_and_tone`, `handoff_rules`) with strict base rules
+  - [x] Editable modular sections viewer with version incrementation upon save / recompile (v1 -> v2)
+  - [x] Built-in scenario test suite runner evaluating 11 test cases (product questions, pricing defense, top objections, competitor questions, disqualified leads, angry/busy prospects, opt-outs in English/Hindi/Hinglish, human request, and unknown questions)
+  - [x] Verified unknown-question safety protocol: returns honest uncertainty and offers human specialist follow-up, never fabricating answers
+  - [x] Interactive prospect chat simulator for real-time roleplay
+  - [x] Automated test runner in `scripts/test-phase1-v2.mjs` (`npm run test:v2:phase1`)
+- [x] **Phase 2: Leads, suppression and campaigns** (COMPLETED)
+  - [x] CSV lead ingestion with Indian E.164 phone normalization (`+91`), duplicate detection across upload batch & existing database, and downloadable error CSV report
+  - [x] Centralized `canContact(lead, channel, now)` safety engine enforcing global suppression list, mock National Do Not Call (NDNC) checks, 10:00-18:00 IST calling hours, and strict Sunday shutdown
+  - [x] Audit log ledger capturing every `canContact` check with timestamp, rule evaluation, and allowed/blocked decision
+  - [x] Pre-launch compliance checklist gate (lead source, calling window, qualification rules, AI disclosure, and opt-out protocol) hard-blocking campaign launch until all 5 are satisfied
+  - [x] Pre-launch usage and provider cost estimator (`leads x average minutes x cost/min`)
+  - [x] Campaign lifecycle state transitions (`DRAFT`, `SCHEDULED`, `ACTIVE`, `PAUSED`, `STOPPED`) with immediate halting of new dialing jobs upon pause/stop
+  - [x] Interactive UI in `src/components/campaign/CampaignManagerV2.tsx`
+  - [x] Automated test runner in `scripts/test-phase2-v2.mjs` (`npm run test:v2:phase2`)
+- [x] **Phase 3: Voice calling engine** (COMPLETED)
+  - [x] OmniDimension Voice Provider adapter for agent "Priya" (`src/lib/adapters/omnidimension-voice.ts`) with live API support and offline test sandbox
+  - [x] Campaign dialing queue worker (`src/lib/voice/campaign-worker.ts`) enforcing `canContact` safety gate right before dialing, concurrency ceilings, and retry schedules
+  - [x] Full call lifecycle state transitions (`QUEUED`, `INITIATED`, `RINGING`, `ANSWERED`, `IN_PROGRESS`, `COMPLETED`, `NO_ANSWER`, `BUSY`, `FAILED`, `CANCELLED`, `OPTED_OUT`)
+  - [x] Live conversation engine (`src/lib/voice/conversation-engine.ts`) with mandatory AI/recording disclosure in opening line and dynamic language switching across English, Hindi, and Hinglish
+  - [x] Multilingual in-call opt-out detection (`src/lib/voice/opt-out-detector.ts`) terminating call politely and immediately adding prospect to global suppression list
+  - [x] Idempotent webhook handler (`src/lib/voice/webhook-handler.ts` & `/api/webhooks/voice`) deduplicating `provider_event_id` and capturing durations, transcripts, and recordings
+  - [x] Cost capture ledger writing connected minutes directly into `usage_events` at ₹12/min rate
+  - [x] Interactive live call monitor and simulator (`src/components/voice/VoiceCallMonitorV2.tsx` at `/calls`)
+  - [x] Automated test runner in `scripts/test-phase3-v2.mjs` (`npm run test:v2:phase3`)
+- [x] **Phase 4: Qualification, Call QA, CRM sync, dashboard** (COMPLETED)
+  - [x] Qualification criteria evaluation engine (`src/lib/intelligence/qualification-engine.ts`) with verbatim evidence citations and zero hallucination of missing criteria
+  - [x] Call QA engine (`src/lib/intelligence/call-qa.ts`) generating 1-paragraph summaries, sentiment, intent, tagged objections, and "where deal was lost" note
+  - [x] Reviewer screen with manual outcome override (`QUALIFIED` / `UNQUALIFIED` / `UNKNOWN`) and coaching feedback logged to update future Sales Brain versions
+  - [x] Google Sheets CRM sync manager (`src/lib/crm/sheets-sync.ts`) synchronizing completed call details, logging all transactions in `crm_sync_log`, and supporting explicit retry on failures
+  - [x] Mobile-first founder dashboard (`src/components/dashboard/FounderDashboardV2.tsx` on `/dashboard`) with top KPI cards, conversation rate, qualification breakdown, top objections distribution, and cost per qualified lead
+  - [x] Automated test runner in `scripts/test-phase4-v2.mjs` (`npm run test:v2:phase4`)
+- [x] **Phase 5: Booking, follow-ups, WhatsApp and human handoff** (COMPLETED)
+  - [x] Google Calendar booking manager (`src/lib/booking/calendar-booking-manager.ts`) with confirmed slot generation strictly upon provider response, honest failure fallbacks, and meeting idempotency
+  - [x] Context-preserved follow-up scheduler (`src/lib/followup/followup-scheduler.ts`) storing callback times, prior conversational notes, and gated by `canContact`
+  - [x] WhatsApp template follow-up engine (`src/lib/messaging/whatsapp-manager.ts`) enforcing approved templates only, verified opt-in checks, sequence termination on reply/refusal, and message deduplication
+  - [x] Multi-tier human handoff manager (`src/lib/handoff/human-handoff-manager.ts`) detecting hot buying intent, direct human requests, and unsupported questions, cascading Live Transfer -> WhatsApp Alert -> Priority Callback Task
+  - [x] Interactive monitor UI (`src/components/booking/BookingAndHandoffMonitorV2.tsx`) for meetings, callbacks, WhatsApp messages, and active escalations
+  - [x] Automated test runner in `scripts/test-phase5-v2.mjs` (`npm run test:v2:phase5`)
+- [x] **Phase 6: Hardening and pilot readiness** (COMPLETED)
+  - [x] Pre-Flight Campaign Release Gate (`src/lib/hardening/release-gate.ts`) evaluating 6-point checklist (AI disclosure, calling hours 10:00-18:00 IST & Sunday shutdown, NDNC DND scrub, multilingual opt-out suite, non-hallucinatory qualification criteria, approved WhatsApp templates) hard-blocking launch until 100% green
+  - [x] Zero-Call Interactive Demo Mode (`src/lib/hardening/demo-mode.ts`) seeding realistic Indian B2B prospect personas and interactive simulated dialogs for mobile founder walkthroughs without placing live telco calls
+  - [x] Audit Logging & Job Retry Ledger (`src/lib/hardening/audit-and-cost-reporter.ts`) tracking all mission-critical events, dead-letter failed jobs (`DIAL_CALL`, `CRM_SYNC`, `CALENDAR_BOOKING`, `WHATSAPP_DISPATCH`), and manual retry actions
+  - [x] Unit Economics & Pilot Cost Reporter computing spend per connected minute (₹12/min), cost per qualified lead, cost per booked meeting, and ROI metrics with zero math drift
+  - [x] Interactive Pilot Readiness & Hardening UI (`src/components/hardening/ReleaseGateAndDemoV2.tsx` on `/pilot-readiness`) with tabbed Release Gate checker, Demo Mode simulator, and Audit & Job Recovery panel
+  - [x] Comprehensive client onboarding guide (`docs/CLIENT_ONBOARDING_GUIDE.md`) covering the 48-hour pilot setup, discovery interview, phone number allowlisting, and calendar integration
+  - [x] Full operational runbook (`docs/OPERATIONAL_RUNBOOK.md`) covering DND compliance, campaign lifecycle, error recovery, emergency shutdown, and daily review routines
+  - [x] Master End-to-End Pilot Journey verification test suite in `scripts/test-phase6-v2.mjs` (`npm run test:v2:phase6`) passing all 12 stages with 100% compliance
+  - [x] Clean Next.js production build (`npm run build`) and clean lint (`npm run lint`) with 0 errors across all routes
+
+
