@@ -38,7 +38,7 @@ export interface CallRecord {
   retryCount: number;
   maxRetries: number;
   nextRetryAt?: string;
-  detectedLanguage: 'en' | 'hi' | 'hinglish';
+  detectedLanguage: 'en' | 'hi' | 'hinglish' | 'te' | 'ta' | 'mr';
   metadata?: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
@@ -69,7 +69,7 @@ export interface VoiceWebhookPayload {
 export interface InCallOptOutResult {
   isOptOut: boolean;
   phrase?: string;
-  detectedLanguage: 'en' | 'hi' | 'hinglish';
+  detectedLanguage: 'en' | 'hi' | 'hinglish' | 'te' | 'ta' | 'mr';
   confidence: number;
 }
 

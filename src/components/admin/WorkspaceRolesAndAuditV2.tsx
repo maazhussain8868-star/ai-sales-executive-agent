@@ -173,7 +173,7 @@ export function WorkspaceRolesAndAuditV2() {
         ].map((tab) => (
           <button
             key={tab.key}
-            onClick={() => { setActiveTab(tab.key as any); setSelectedDiff(null); }}
+            onClick={() => { setActiveTab(tab.key as 'team' | 'versions' | 'audit'); setSelectedDiff(null); }}
             style={{
               padding: '12px 20px',
               background: 'transparent',

@@ -151,6 +151,40 @@
   - [x] Comprehensive client onboarding guide (`docs/CLIENT_ONBOARDING_GUIDE.md`) covering the 48-hour pilot setup, discovery interview, phone number allowlisting, and calendar integration
   - [x] Full operational runbook (`docs/OPERATIONAL_RUNBOOK.md`) covering DND compliance, campaign lifecycle, error recovery, emergency shutdown, and daily review routines
   - [x] Master End-to-End Pilot Journey verification test suite in `scripts/test-phase6-v2.mjs` (`npm run test:v2:phase6`) passing all 12 stages with 100% compliance
-  - [x] Clean Next.js production build (`npm run build`) and clean lint (`npm run lint`) with 0 errors across all routes
+- [x] **Phase 7: Multi-tenant roles, Sales Brain rollback and audit log UI** (COMPLETED)
+  - [x] Multi-tenant RBAC engine (`src/lib/auth/rbac-manager-v2.ts` & `src/types/roles-v2.ts`) mapping explicit permissions for `owner`, `admin`, and `member` tiers
+  - [x] Strict permission gating: `member` restricted to view-only (no campaign launches or Sales Brain edits); `admin` prohibited from workspace billing/deletion; sole owner protected from demotion/removal
+  - [x] Immutable Sales Brain version history & section diff engine (`src/lib/brain/version-manager-v2.ts`) highlighting modified sections and preserving audit trails
+  - [x] One-click immutable rollback: restoring an earlier version clones it into a new active revision (e.g., v3 cloned from v1) with audit reason `ROLLBACK`
+  - [x] Server actions (`src/app/actions/roles-and-audit-v2.ts`) for inviting members, updating roles, running rollbacks, and querying audit logs
+  - [x] Interactive Team & Governance UI (`src/components/admin/WorkspaceRolesAndAuditV2.tsx` on `/settings/team`) with tabs for Team & Roles, Brain Version Timeline & Diff Viewer, and System Audit Trail
+  - [x] Verification test suite in `scripts/test-phase7-v2.mjs` (`npm run test:v2:phase7`) passing all 6 authorization, membership, diff, rollback, and audit checks
+- [x] **Phase 8: Usage ledger, plan allowance, overage, invoices and reconciliation** (COMPLETED)
+  - [x] Plan tier specifications (`src/lib/billing/usage-ledger-v2.ts` & `src/types/billing-v2.ts`) defining Starter (500 min, ₹6,000, ₹15/min overage), Growth (1,500 min, ₹15,000, ₹12/min overage), and Scale (5,000 min, ₹45,000, ₹10/min overage)
+  - [x] Real-time usage ledger tracking connected minutes, remaining allowances, and triggering threshold alerts (`WARNING_80` at 80%, `LIMIT_100` at 100%)
+  - [x] Overage protection gate: automatically pausing outbound dialing when plan cap is reached if overage is disabled, or seamlessly accruing pay-as-you-go overage charges if enabled
+  - [x] Monthly invoice generator (`src/lib/billing/invoice-generator-v2.ts`) producing itemized statements with 18% Indian GST breakdown and immutable audit ledgering
+  - [x] Telephony provider reconciliation engine (`src/lib/billing/reconciliation-engine-v2.ts`) comparing platform logged duration against carrier CDRs, enforcing 3% variance tolerance, and flagging pulse discrepancies
+  - [x] Interactive Billing & Usage Dashboard (`src/components/billing/BillingAndUsageMonitorV2.tsx` on `/settings/billing`) with live utilization gauge, overage toggle, plan switcher, invoice list, and CDR audit runner
+  - [x] Verification test suite in `scripts/test-phase8-v2.mjs` (`npm run test:v2:phase8`) passing all 6 plan allowance, threshold warning, overage fee, dialing pause, GST invoice, and reconciliation checks
+- [x] **Phase 9: Email follow-up and sequences** (COMPLETED)
+  - [x] Email sequence engine (`src/lib/messaging/email-sequence-manager-v2.ts` & `src/types/email-sequences-v2.ts`) supporting multi-step post-call nurture flows (call summary, case study, final breakup)
+  - [x] Mandatory unsubscribe & physical postal address compliance verification embedded in all HTML/text email templates
+  - [x] Outbound email provider (`src/lib/adapters/fake/fake-email.ts`) embedding RFC `List-Unsubscribe` headers and delivery audit logging
+  - [x] Automated sequence pausing (`PAUSED_ON_REPLY`): instantly halting future email touchpoints upon prospect inbound reply
+  - [x] Automated unsubscribe suppression (`HALTED_UNSUBSCRIBED`): halting active enrollments and adding unsubscribed emails to global suppression list
+  - [x] Interactive Email Sequence Dashboard (`src/components/messaging/EmailSequenceMonitorV2.tsx` on `/settings/email-sequences`) with enrollment table, template previews, header inspection modal, and test reply/unsubscribe simulators
+  - [x] Verification test suite in `scripts/test-phase9-v2.mjs` (`npm run test:v2:phase9`) passing all 5 compliance, dispatch, pause-on-reply, unsubscribe suppression, and full lifecycle checks
+  - [x] Clean Next.js production build (`npm run build`) and clean lint (`npm run lint`) with 0 errors
+- [x] **Phase 10: Telugu & Extra Languages (Tamil, Marathi) + CRM Adapters (HubSpot, Zoho)** (COMPLETED)
+  - [x] Regional Indian voice localization & disclosure config (`src/types/crm-integrations-v2.ts`) supporting Telugu (`te`), Tamil (`ta`), and Marathi (`mr`) with culturally natural AI identity disclosures
+  - [x] Multilingual in-call opt-out refusal detection (`src/lib/voice/opt-out-detector.ts`) identifying native script and Latin transliteration refusal patterns across Telugu, Tamil, and Marathi
+  - [x] HubSpot CRM Provider Adapter (`src/lib/adapters/crm/hubspot-crm.ts`) syncing contacts and pipeline deals with qualified lead checks
+  - [x] Zoho CRM Provider Adapter (`src/lib/adapters/crm/zoho-crm.ts`) syncing leads, mapped `Lead_Status`, and activity call notes
+  - [x] Server actions (`src/app/actions/crm-integrations-v2.ts`) for saving CRM configuration, testing CRM sync across providers, and loading regional language metadata
+  - [x] Interactive CRM & Regional Localization UI (`src/components/crm/CrmIntegrationsMonitorV2.tsx` on `/settings/integrations`) with provider credential configuration, one-click sync simulation, and regional language disclosure preview
+  - [x] Verification test suite in `scripts/test-phase10-v2.mjs` (`npm run test:v2:phase10`) passing all 5 localization, refusal detection, HubSpot, Zoho, and validation checks
+  - [x] Clean Next.js production build (`npm run build`) and regression test suites passing 100% across all phases (Phase 0 to Phase 10)
+- [ ] **Phase 11: Production hardening, security review and launch preparation** (PENDING)
 
 

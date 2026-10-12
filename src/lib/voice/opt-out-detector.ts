@@ -7,8 +7,8 @@
 import { InCallOptOutResult } from '@/types/voice-v2';
 import { addToSuppressionList } from '@/lib/safety/can-contact';
 
-// Refusal patterns across English, Hindi, and Hinglish
-const OPT_OUT_PATTERNS: { pattern: RegExp; lang: 'en' | 'hi' | 'hinglish'; label: string }[] = [
+// Refusal patterns across English, Hindi, Hinglish, Telugu, Tamil, and Marathi
+const OPT_OUT_PATTERNS: { pattern: RegExp; lang: 'en' | 'hi' | 'hinglish' | 'te' | 'ta' | 'mr'; label: string }[] = [
   // English patterns
   { pattern: /\b(stop\s+(calling|calling\s+me|this)|do\s+not\s+call|don'?t\s+call(\s+me)?(\s+again)?)\b/i, lang: 'en', label: 'stop calling' },
   { pattern: /\b(remove\s+(my\s+number|me\s+from\s+the\s+list)|take\s+me\s+off(\s+the\s+list)?|delete\s+my\s+number)\b/i, lang: 'en', label: 'remove number' },
@@ -27,6 +27,18 @@ const OPT_OUT_PATTERNS: { pattern: RegExp; lang: 'en' | 'hi' | 'hinglish'; label
   { pattern: /(नंबर\s*(हटा\s*दो|डिलीट\s*करो|हटाएं)|सूची\s*से\s*हटा\s*दो)/, lang: 'hi', label: 'नंबर हटा दो' },
   { pattern: /(दोबारा\s*कॉल\s*मत\s*करना|फिर\s*से\s*फोन\s*मत\s*करना)/, lang: 'hi', label: 'दोबारा कॉल मत करना' },
   { pattern: /(नहीं\s*चाहिए\s*फोन\s*रखो)/, lang: 'hi', label: 'नहीं चाहिए फोन रखो' },
+
+  // Telugu patterns (Telugu script + Telugu-English)
+  { pattern: /(కాల్\s*చేయవద్దు|ఫోన్\s*చేయవద్దు|మళ్ళీ\s*కాల్\s*చేయకండి|నెంబర్\s*తొలగించండి|వద్దు\s*ఆపండి)/, lang: 'te', label: 'కాల్ చేయవద్దు' },
+  { pattern: /\b(call\s+cheyoddu|phone\s+cheyoddu|malli\s+call\s+cheyakandi|voddu\s+stop)\b/i, lang: 'te', label: 'call cheyoddu' },
+
+  // Tamil patterns (Tamil script + Tanglish)
+  { pattern: /(கால்\s*பண்ணாதீங்க|போன்\s*செய்யாதீங்க|மீண்டும்\s*அழைக்க\s*வேண்டாம்|நம்பர்\s*நீக்குங்கள்|வேண்டாம்\s*நிறுத்துங்கள்)/, lang: 'ta', label: 'கால் பண்ணாதீங்க' },
+  { pattern: /\b(call\s+pannadheenga|phone\s+pannadheenga|vendaam\s+stop|marubadiyum\s+call\s+pannadheenga)\b/i, lang: 'ta', label: 'call pannadheenga' },
+
+  // Marathi patterns (Devanagari Marathi + Marathlish)
+  { pattern: /(कॉल\s*करू\s*नका|फोन\s*करू\s*नका|पुन्हा\s*कॉल\s*नको|नंबर\s*हटवा|नको\s*थांबा)/, lang: 'mr', label: 'कॉल करू नका' },
+  { pattern: /\b(call\s+karu\s+naka|phone\s+karu\s+naka|punha\s+call\s+nako|parath\s+call\s+karu\s+naka)\b/i, lang: 'mr', label: 'call karu naka' },
 ];
 
 /**
@@ -62,7 +74,7 @@ export async function executeInCallOptOut(params: {
   leadId?: string;
   callId?: string;
   triggerPhrase?: string;
-  language?: 'en' | 'hi' | 'hinglish';
+  language?: 'en' | 'hi' | 'hinglish' | 'te' | 'ta' | 'mr';
 }): Promise<{
   success: boolean;
   politeExitUtterance: string;

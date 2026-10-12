@@ -15,6 +15,10 @@
     "test:v2:phase4": "tsx scripts/test-phase4-v2.mjs",
     "test:v2:phase5": "tsx scripts/test-phase5-v2.mjs",
     "test:v2:phase6": "tsx scripts/test-phase6-v2.mjs",
+    "test:v2:phase7": "tsx scripts/test-phase7-v2.mjs",
+    "test:v2:phase8": "tsx scripts/test-phase8-v2.mjs",
+    "test:v2:phase9": "tsx scripts/test-phase9-v2.mjs",
+    "test:v2:phase10": "tsx scripts/test-phase10-v2.mjs",
     "test": "node scripts/test-phase0.mjs && tsx scripts/test-phase1.mjs && tsx scripts/test-phase2.mjs && tsx scripts/test-phase3.mjs && tsx scripts/test-phase4.mjs && tsx scripts/test-phase5.mjs && tsx scripts/test-phase6.mjs && tsx scripts/test-phase7.mjs"
   },
   "dependencies": {

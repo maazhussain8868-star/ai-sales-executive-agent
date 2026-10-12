@@ -125,3 +125,6 @@ export function clearHardeningStores(): void {
   AUDIT_ENTRIES.length = 0;
   FAILED_JOBS.clear();
 }
+
+export const logAuditEvent = logSystemAuditEvent;
+export const getAuditLogs = getSystemAuditLogs;

@@ -12,7 +12,7 @@ export interface ConversationTurn {
   speaker: 'agent' | 'prospect';
   text: string;
   timestamp: string;
-  detectedLanguage?: 'en' | 'hi' | 'hinglish';
+  detectedLanguage?: 'en' | 'hi' | 'hinglish' | 'te' | 'ta' | 'mr';
 }
 
 export interface ConversationState {
@@ -22,7 +22,7 @@ export interface ConversationState {
   phoneNumber: string;
   leadName?: string;
   status: CallState;
-  currentLanguage: 'en' | 'hi' | 'hinglish';
+  currentLanguage: 'en' | 'hi' | 'hinglish' | 'te' | 'ta' | 'mr';
   turns: ConversationTurn[];
   isOptedOut: boolean;
   optOutReason?: string;
@@ -40,7 +40,7 @@ export class VoiceConversationEngine {
     workspaceId: string;
     phoneNumber: string;
     leadName?: string;
-    initialLanguage?: 'en' | 'hi' | 'hinglish';
+    initialLanguage?: 'en' | 'hi' | 'hinglish' | 'te' | 'ta' | 'mr';
     brain: CompiledSalesBrain;
   }) {
     this.brain = params.brain;
